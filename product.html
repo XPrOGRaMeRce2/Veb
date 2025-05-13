@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Столарија.mk - Детали за продуктот">
+    <title>Столарија.mk - Детали за продуктот</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="Glavna navigacija">
+            <div class="logo">
+                <a href="index.html" aria-label="Почетна страна">
+                    <img src="logo.png" alt="Столарија.mk Лого" class="logo-img">
+                </a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Meni" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html#pocetna">Почетна</a></li>
+                <li><a href="index.html#produkti">Продукти</a></li>
+                <li><a href="index.html#za-nas">За Нас</a></li>
+                <li><a href="index.html#kontakt">Контакт</a></li>
+            </ul>
+            <div class="cart-icon">
+                <a href="cart.html" aria-label="Кошничка">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="product-detail-container">
+        <div class="product-detail">
+            <div class="product-images">
+                <img src="" alt="" class="main-image" id="product-image">
+            </div>
+            <div class="product-details">
+                <h1 id="product-name"></h1>
+                <p class="product-description" id="product-description"></p>
+                <div class="product-specs">
+                    <h3>Спецификации</h3>
+                    <ul>
+                        <li><strong>Материјал:</strong> <span id="product-material"></span></li>
+                        <li><strong>Димензии:</strong> <span id="product-dimensions"></span></li>
+                        <li><strong>Тежина:</strong> <span id="product-weight"></span></li>
+                        <li><strong>Гаранција:</strong> 2 години</li>
+                    </ul>
+                </div>
+                <div class="product-features">
+                    <h3>Карактеристики</h3>
+                    <ul>
+                        <li>✅ Ергономски дизајн</li>
+                        <li>✅ Висококвалитетни материјали</li>
+                        <li>✅ Лесна одржување</li>
+                        <li>✅ Современ стил</li>
+                    </ul>
+                </div>
+                <div class="color-options" id="color-options">
+                    <!-- Color options will be added here -->
+                </div>
+                <p class="product-price" id="product-price"></p>
+                <button class="add-to-cart" id="add-to-cart">Додади во кошничка</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="cart" class="cart-modal">
+        <div class="cart-content">
+            <h3>Кошничка</h3>
+            <div class="cart-items">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-total">
+                <p>Вкупно: <span id="total-amount">0</span> ден.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Контакт</h3>
+                <p>📞 +389 2 123 4567</p>
+                <p>✉️ info@stolarija.mk</p>
+                <p>📍 Скопје, Македонија</p>
+            </div>
+            <div class="footer-section">
+                <h3>Следете нè</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Instagram">📸</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Столарија.mk. Сите права се задржани.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+
+        // Find product
+        const product = products.find(p => p.id === productId);
+
+        if (product) {
+            // Update page content
+            document.getElementById('product-name').textContent = product.name;
+            document.getElementById('product-description').textContent = product.description;
+            document.getElementById('product-price').textContent = `${product.price} ден.`;
+            document.getElementById('product-image').src = product.image;
+            document.getElementById('product-image').alt = product.name;
+            document.getElementById('product-material').textContent = product.material;
+            document.getElementById('product-dimensions').textContent = product.dimensions;
+            document.getElementById('product-weight').textContent = product.weight;
+
+            // Add color options
+            const colorOptions = document.getElementById('color-options');
+            colorOptions.innerHTML = product.colors.map((color, index) => `
+                <button class="color-option ${index === 0 ? 'active' : ''}" 
+                        style="background-color: ${color}" 
+                        onclick="selectColor(this)">
+                </button>
+            `).join('');
+
+            // Add to cart functionality
+            document.getElementById('add-to-cart').onclick = () => addToCart(product.id);
+        }
+
+        function selectColor(button) {
+            // Update active state
+            document.querySelectorAll('.color-option').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+    </script>
+</body>
+</html> 

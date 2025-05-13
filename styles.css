@@ -1,0 +1,760 @@
+/* Основни стилови и ресетирање */
+@font-face {
+    font-family: 'B612';
+    src: url('B612.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'B612', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding-top: 90px;
+}
+
+/* Анимација за вчитување - се прикажува додека се вчитува страницата */
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+}
+
+.loading.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- Навигација (navbar) --- */
+.navbar {
+    background: #ffffff;
+    padding: 1rem 5%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    width: 180px;
+    height: auto;
+}
+
+.logo a {
+    color: #2c3e50;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #e74c3c;
+}
+
+/* Мобилно мени - се прикажува само на мали екрани */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Главна секција со позадинска слика */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1567016432779-094069958ea5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 0 1rem;
+    margin-top: 0;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Копче за повик на акција */
+.cta-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: #e74c3c;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    background: #c0392b;
+}
+
+/* Секција со производи - грид распоред */
+.products {
+    padding: 5rem 5%;
+    background: #f5f6fa;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.products h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* Картички за производи */
+.product-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-image {
+    width: 100%;
+    height: 400px;
+    object-fit: contain;
+    background-color: white;
+    padding: 20px;
+    mix-blend-mode: normal;
+}
+
+.product-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.product-description {
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.product-price {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 1rem 0;
+}
+
+/* Копче за додавање во кошничка */
+.add-to-cart {
+    width: 100%;
+    padding: 0.8rem;
+    background: #2c3e50;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: auto;
+}
+
+.add-to-cart:hover {
+    background: #34495e;
+}
+
+/* Стилови за детали на производот */
+.product-detail-container {
+    padding: 9rem 5% 5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-images {
+    position: sticky;
+    top: 100px;
+}
+
+.main-image {
+    width: 100%;
+    height: 600px;
+    object-fit: contain;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-details {
+    padding: 1rem;
+}
+
+.product-details h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.product-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.product-specs, .product-features {
+    margin-bottom: 2rem;
+}
+
+.product-specs h3, .product-features h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.product-specs ul, .product-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.product-specs li, .product-features li {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.product-features li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Стилови за кошничка */
+.cart-page {
+    padding: 5rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.cart-container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.cart-container h1 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.cart-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+/* Стилови за производите во кошничката */
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f5f6fa;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cart-item-info h4 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+/* Акции за производите во кошничката */
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cart-item-actions button {
+    background: #ffffff;
+    border: 1px solid #2c3e50;
+    color: #2c3e50;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.cart-item-actions button:hover {
+    background: #2c3e50;
+    color: #ffffff;
+}
+
+.cart-item-actions .remove-item {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.cart-item-actions .remove-item:hover {
+    background: #e74c3c;
+    color: #ffffff;
+}
+
+/* Резиме на кошничката */
+.cart-summary {
+    background: #f5f6fa;
+    padding: 2rem;
+    border-radius: 10px;
+    position: sticky;
+    top: 2rem;
+}
+
+.cart-summary h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.summary-item.total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    border-top: 2px solid #2c3e50;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+/* Опции за достава и плаќање */
+.delivery-options,
+.payment-options {
+    margin-top: 2rem;
+}
+
+.delivery-options h3,
+.payment-options h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #2c3e50;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+/* Копче за завршување на нарачката */
+.checkout-button {
+    width: 100%;
+    padding: 1rem;
+    background: #2c3e50;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 2rem;
+}
+
+.checkout-button:hover {
+    background: #e74c3c;
+}
+
+.empty-cart {
+    text-align: center;
+    color: #333;
+    padding: 2rem;
+    font-size: 1.2rem;
+}
+
+/* Известување за кошничка - се појавува при додавање на производ */
+.cart-notification {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #2c3e50;
+    color: #ffffff;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-in 2.7s;
+    z-index: 1000;
+}
+
+/* Анимации за известувањата */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Адаптивен дизајн - мобилни уреди */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .cart-content {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-item {
+        grid-template-columns: 80px 1fr;
+    }
+
+    .cart-item-actions {
+        grid-column: 1 / -1;
+        justify-content: center;
+    }
+
+    .product-detail {
+        grid-template-columns: 1fr;
+    }
+
+    .product-images {
+        position: static;
+    }
+
+    .main-image {
+        height: 400px;
+    }
+}
+
+/* --- Секција За Нас (about) --- */
+.about {
+    padding: 5rem 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+.about h2 {
+    margin-bottom: 2rem;
+    color: #2c3e50;
+    font-size: 2rem;
+}
+
+.about p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 800px;
+}
+
+/* --- Често поставувани прашања (FAQ) --- */
+.faq {
+    padding: 5rem 5%;
+    background: #f5f6fa;
+    max-width: 1200px;
+    margin: 0 auto 3rem auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+.faq h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+}
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+.faq-item {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.faq-item h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+.faq-item p {
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- Достава и плаќање --- */
+.delivery {
+    padding: 5rem 5%;
+    max-width: 1200px;
+    margin: 0 auto 3rem auto;
+}
+.delivery h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+}
+.delivery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+.delivery-item {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.delivery-item h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.delivery-item ul {
+    list-style: none;
+    padding: 0;
+}
+.delivery-item li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #333;
+}
+.delivery-item li:before {
+    content: "•";
+    color: #e74c3c;
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+}
+
+/* --- Контакт форма --- */
+.contact {
+    padding: 5rem 5%;
+    max-width: 1200px;
+    margin: 0 auto 3rem auto;
+}
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    padding: 2rem;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.submit-button {
+    background: #2c3e50;
+    color: #fff;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1.1rem;
+}
+.submit-button:hover {
+    background: #e74c3c;
+}
+
+/* --- Футер --- */
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 2rem auto;
+}
+.footer-content h3 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+.footer-content p {
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.social-links a {
+    color: #fff;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+.social-links a:hover {
+    color: #e74c3c;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    background: #2c3e50;
+}
+footer {
+    background: #2c3e50;
+    color: #fff;
+    padding: 3rem 5% 1rem;
+    margin-top: 3rem;
+    border-radius: 0 0 10px 10px;
+} 

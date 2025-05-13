@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Столарија.mk - Кошничка">
+    <title>Столарија.mk - Кошничка</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="Glavna navigacija">
+            <div class="logo">
+                <a href="index.html" aria-label="Почетна страна">
+                    <img src="logo.png" alt="Столарија.mk Лого" class="logo-img">
+                </a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Meni" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html#pocetna">Почетна</a></li>
+                <li><a href="index.html#produkti">Продукти</a></li>
+                <li><a href="index.html#za-nas">За Нас</a></li>
+            </ul>
+            <div class="cart-icon">
+                <a href="cart.html" aria-label="Кошничка">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="cart-page">
+        <div class="cart-container">
+            <h1>Вашата Кошничка</h1>
+            
+            <div class="cart-content">
+                <div class="cart-items">
+                    <!-- Cart items will be loaded here -->
+                </div>
+
+                <div class="cart-summary">
+                    <h2>Вкупно</h2>
+                    <div class="summary-item">
+                        <span>Производ:</span>
+                        <span id="subtotal">0 ден.</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Достава:</span>
+                        <span id="delivery-cost">0 ден.</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Вкупно за плаќање:</span>
+                        <span id="total">0 ден.</span>
+                    </div>
+
+                    <div class="delivery-options">
+                        <h3>Достава</h3>
+                        <select id="delivery-city" onchange="updateDeliveryCost()">
+                            <option value="skopje">Скопје</option>
+                            <option value="other">Други градови</option>
+                        </select>
+                    </div>
+
+                    <div class="payment-options">
+                        <h3>Начин на плаќање</h3>
+                        <select id="payment-method">
+                            <option value="card">Плаќање со картичка</option>
+                            <option value="cash">Плаќање со готово при достава</option>
+                            <option value="transfer">Банкарски трансфер</option>
+                            <option value="installments">Плаќање на рати</option>
+                        </select>
+                    </div>
+
+                    <button class="checkout-button" onclick="proceedToCheckout()">
+                        Продолжи со нарачката
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Контакт</h3>
+                <p>📞 +389 2 123 4567</p>
+                <p>✉️ info@stolarija.mk</p>
+                <p>📍 Скопје, Македонија</p>
+            </div>
+            <div class="footer-section">
+                <h3>Следете нè</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Instagram">📸</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Столарија.mk. Сите права се задржани.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load cart items when page loads
+        window.addEventListener('load', () => {
+            displayCartItems();
+            updateDeliveryCost();
+        });
+
+        function updateDeliveryCost() {
+            const subtotal = calculateSubtotal();
+            const city = document.getElementById('delivery-city').value;
+            let deliveryCost = 0;
+
+            if (subtotal >= 10000) {
+                deliveryCost = 0; // Free delivery for orders over 10000
+            } else {
+                deliveryCost = city === 'skopje' ? 200 : 300;
+            }
+
+            document.getElementById('delivery-cost').textContent = `${deliveryCost} ден.`;
+            document.getElementById('total').textContent = `${subtotal + deliveryCost} ден.`;
+        }
+
+        function calculateSubtotal() {
+            return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        }
+
+        function displayCartItems() {
+            const cartItemsContainer = document.querySelector('.cart-items');
+            if (!cartItemsContainer) return;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart">Вашата кошничка е празна</p>';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.price} ден. x ${item.quantity}</p>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                        <button onclick="removeFromCart(${item.id})" class="remove-item">❌</button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('subtotal').textContent = `${calculateSubtotal()} ден.`;
+            document.querySelector('.cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(productId);
+                return;
+            }
+
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = newQuantity;
+                displayCartItems();
+                updateDeliveryCost();
+            }
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                alert('Вашата кошничка е празна');
+                return;
+            }
+
+            const paymentMethod = document.getElementById('payment-method').value;
+            const deliveryCity = document.getElementById('delivery-city').value;
+            const total = calculateSubtotal() + (calculateSubtotal() >= 10000 ? 0 : (deliveryCity === 'skopje' ? 200 : 300));
+
+            // Get payment method text in Macedonian
+            let paymentMethodText = '';
+            switch(paymentMethod) {
+                case 'card':
+                    paymentMethodText = 'Плаќање со картичка';
+                    break;
+                case 'cash':
+                    paymentMethodText = 'Плаќање со готово при достава';
+                    break;
+                case 'transfer':
+                    paymentMethodText = 'Банкарски трансфер';
+                    break;
+                case 'installments':
+                    paymentMethodText = 'Плаќање на рати';
+                    break;
+            }
+
+            // Show success message
+            alert(`Нарачката е успешна!\nНачин на плаќање: ${paymentMethodText}\nВкупно: ${total} ден.`);
+
+            // Reset cart
+            cart = [];
+            localStorage.removeItem('cart');
+            displayCartItems();
+            updateDeliveryCost();
+            updateCartCount();
+
+            // Redirect to home page after 1 second
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html> 
